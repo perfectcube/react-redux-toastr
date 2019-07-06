@@ -1,5 +1,6 @@
 import React, {isValidElement} from 'react'; //  eslint-disable-line no-unused-vars
 import PropTypes from 'prop-types';
+import dompurify from 'dompurify';
 import classnames from 'classnames';
 import ProgressBar from './ProgressBar';
 import Icon from './Icon';
@@ -218,6 +219,11 @@ export default class ToastrBox extends React.Component {
       title
     } = this.props.item;
 
+    const getMarkup = (string) => {
+      const sanitize = dompurify.sanitize;
+      return {__html: sanitize(string)};
+    } 
+
     return (
       <div>
         <div className="rrt-left-container">
@@ -228,7 +234,7 @@ export default class ToastrBox extends React.Component {
         {options.status && type === 'light' && <div className={classnames('toastr-status', options.status)}/>}
         <div className="rrt-middle-container" role="alertdialog" aria-labelledby={`dialogTitle-${this.id}`} aria-describedby={`dialogDesc-${this.id}`}>
           {title && <div id={`dialogTitle-${this.id}`} className="rrt-title">{title}</div>}
-          {message && <div id={`dialogDesc-${this.id}`} className="rrt-text">{message}</div>}
+          {message && <div id={`dialogDesc-${this.id}`} className="rrt-text"><span dangerouslySetInnerHTML={getMarkup(message)} /></div>}
           {options.component && this.renderSubComponent()}
         </div>
 
