@@ -30,7 +30,7 @@ export default class Menu extends React.Component {
         <li className="success" onClick={() => {
           toastr.success(
             'In the beginning was the word',
-            'and the Word was with God, and the Word was God...',
+            'and <a href="/heaven/">the Word</a> was with God, and the Word was God...',
             {
               timeOut: 10000,
               position: 'top-left',
